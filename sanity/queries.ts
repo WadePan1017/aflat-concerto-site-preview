@@ -264,7 +264,10 @@ function mapContent(
   };
 }
 
-export async function fetchSiteContent(language: Language): Promise<SiteContent> {
+export async function fetchSiteContent(
+  language: Language,
+  requestedSiteKey = siteKey,
+): Promise<SiteContent> {
   const fallback = defaultContentByLanguage[language];
 
   if (!sanityEnabled) {
@@ -273,7 +276,7 @@ export async function fetchSiteContent(language: Language): Promise<SiteContent>
 
   try {
     const site = await sanityClient.fetch<SanitySite | null>(siteContentQuery, {
-      siteKey,
+      siteKey: requestedSiteKey,
     });
 
     if (!site) {

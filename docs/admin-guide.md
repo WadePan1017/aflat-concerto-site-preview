@@ -22,6 +22,13 @@ https://账号名.github.io/仓库名/studio/
 https://账号名.github.io/studio/
 ```
 
+当前两个前台页面：
+
+```text
+网站一：https://wadepan1017.github.io/aflat-concerto-site-preview/
+网站二：https://wadepan1017.github.io/aflat-concerto-site-preview/second/
+```
+
 ## 需要配置的环境变量
 
 参考 `.env.example`：
