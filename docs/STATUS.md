@@ -4,8 +4,8 @@
 - Workspace: current repository
 - Stack: `Next.js + TypeScript + Tailwind CSS + Framer Motion`
 - Deployment target: `GitHub Pages`
-- Delivery mode: `Plan A`
-- Meaning of Plan A: no admin panel, but content stays maintainable through structured data files and image assets
+- Delivery mode: `Plan A + Sanity CMS`
+- Meaning of Plan A + Sanity CMS: static GitHub Pages deployment, with Sanity as the optional backend content source and `data/site.ts` as the fallback
 
 ## Current Product Direction
 - The PSD-style landing visual is the primary hero
@@ -13,6 +13,7 @@
 - `LINKS / MY ACCOUNTS` scrolls to the links section
 - `HOME / HOME PAGE` scrolls back to the top
 - Gallery stays on the same page and opens a modal instead of navigating away
+- Sanity CMS is the preferred content backend when environment variables are configured
 
 ## Implemented
 - Next.js app scaffold is complete
@@ -40,14 +41,19 @@
   - `public/assets/hotspots/debug-buttons-area.png`
   - `public/assets/extract/group_14_buttons.png`
 - Static export config for GitHub Pages is in place
+- Sanity Studio route exists at `/studio`
+- Frontend reads Sanity content at build time and falls back to `data/site.ts`
+- Studio navigation is organized into `站点内容` and `作品管理`
+- GitHub Actions supports manual deploy and optional Sanity-triggered `repository_dispatch`
 
 ## Main Files
-- Entry page: [app/page.tsx](C:/Users/lenovo/OneDrive/文档/降A大调协奏曲oc个人主页网站开发/app/page.tsx)
-- Hero and hotspot logic: [components/PosterStage.tsx](C:/Users/lenovo/OneDrive/文档/降A大调协奏曲oc个人主页网站开发/components/PosterStage.tsx)
-- Gallery list: [components/GallerySection.tsx](C:/Users/lenovo/OneDrive/文档/降A大调协奏曲oc个人主页网站开发/components/GallerySection.tsx)
-- Gallery modal: [components/GalleryModal.tsx](C:/Users/lenovo/OneDrive/文档/降A大调协奏曲oc个人主页网站开发/components/GalleryModal.tsx)
-- Content data: [data/site.ts](C:/Users/lenovo/OneDrive/文档/降A大调协奏曲oc个人主页网站开发/data/site.ts)
-- Asset guide: [docs/gallery-assets-spec.md](C:/Users/lenovo/OneDrive/文档/降A大调协奏曲oc个人主页网站开发/docs/gallery-assets-spec.md)
+- Entry page: [app/page.tsx](E:/panweidongkaifa/降A大调协奏曲oc个人主页网站开发/app/page.tsx)
+- Hero and hotspot logic: [components/PosterStage.tsx](E:/panweidongkaifa/降A大调协奏曲oc个人主页网站开发/components/PosterStage.tsx)
+- Gallery list: [components/GallerySection.tsx](E:/panweidongkaifa/降A大调协奏曲oc个人主页网站开发/components/GallerySection.tsx)
+- Gallery modal: [components/GalleryModal.tsx](E:/panweidongkaifa/降A大调协奏曲oc个人主页网站开发/components/GalleryModal.tsx)
+- Content data: [data/site.ts](E:/panweidongkaifa/降A大调协奏曲oc个人主页网站开发/data/site.ts)
+- Asset guide: [docs/gallery-assets-spec.md](E:/panweidongkaifa/降A大调协奏曲oc个人主页网站开发/docs/gallery-assets-spec.md)
+- Admin guide: [docs/admin-guide.md](E:/panweidongkaifa/降A大调协奏曲oc个人主页网站开发/docs/admin-guide.md)
 
 ## Known Issues
 - Link URLs and notes are still placeholder values and should be replaced with real accounts
@@ -55,26 +61,31 @@
 - `components/HeroSection.tsx` and `public/assets/hero-character.png` are legacy from the earlier layout and should be either re-used intentionally or removed
 - Gallery thumbnails are still PNG files and can be optimized later if page weight becomes a concern
 - README is still the default Next.js scaffold text
+- A real Sanity project ID/dataset still needs to be provided before live CMS content can be used
+- Because deployment is static GitHub Pages, Sanity content changes require a rebuild/redeploy
 
 ## Recommended Next Steps
-1. Run a browser visual pass and tune hotspot positions if needed
-2. Replace placeholder account links in `data/site.ts`
-3. Decide whether to keep or remove the legacy hero component and asset
-4. Optionally optimize gallery thumbnails and avatar assets
-5. Rewrite `README.md` if the repository will be handed off
+1. Create/configure the real Sanity project and set environment variables
+2. Add CORS origins for local preview and deployed GitHub Pages URL in Sanity
+3. Run a browser visual pass and tune hotspot positions if needed
+4. Replace placeholder account links in CMS or `data/site.ts`
+5. Decide whether to keep or remove the legacy hero component and asset
+6. Optionally optimize gallery thumbnails and avatar assets
+7. Rewrite `README.md` if the repository will be handed off
 
 ## Run Commands
 - Dev: `npm run dev`
 - Preview static export: `npm run preview`
 - Lint: `npm run lint`
 - Build: `npm run build`
+- Admin guide: `docs/admin-guide.md`
 
 ## How To Resume In A New Chat
 Use this message:
 
 ```text
 Continue this project:
-C:\Users\lenovo\OneDrive\文档\降A大调协奏曲oc个人主页网站开发
+E:\panweidongkaifa\降A大调协奏曲oc个人主页网站开发
 
 First read:
 - docs/STATUS.md

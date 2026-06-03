@@ -12,14 +12,7 @@ type PortfolioShellProps = {
 };
 
 export function PortfolioShell({ contentByLanguage }: PortfolioShellProps) {
-  const [language, setLanguage] = useState<Language>(() => {
-    if (typeof window === "undefined") {
-      return "en";
-    }
-
-    const requested = new URLSearchParams(window.location.search).get("lang");
-    return requested === "zh" ? "zh" : "en";
-  });
+  const [language, setLanguage] = useState<Language>("en");
   const content = contentByLanguage[language];
   const otherLanguage = language === "en" ? "zh" : "en";
 

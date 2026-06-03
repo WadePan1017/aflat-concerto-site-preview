@@ -115,9 +115,9 @@ function pick(language: Language, en?: string, zh?: string) {
 
 function pickList(language: Language, en?: string[], zh?: string[]) {
   if (language === "zh") {
-    return zh?.length ? zh : en || [];
+    return zh?.length ? zh : en;
   }
-  return en?.length ? en : zh || [];
+  return en?.length ? en : zh;
 }
 
 function imageUrl(image: SanityImage | undefined, fallback: string) {
@@ -156,6 +156,12 @@ function mapContent(
   language: Language,
   fallback: SiteContent,
 ): SiteContent {
+  const profileTags = pickList(
+    language,
+    site.profileTagsEn,
+    site.profileTagsZh,
+  );
+
   return {
     siteKey: site.siteKey || fallback.siteKey,
     siteInfo: {
@@ -171,11 +177,9 @@ function mapContent(
       role: pick(language, site.roleEn, site.roleZh) || fallback.siteInfo.role,
       aura: pick(language, site.auraEn, site.auraZh) || fallback.siteInfo.aura,
       style: pick(language, site.styleEn, site.styleZh) || fallback.siteInfo.style,
-      profileTags:
-        pickList(language, site.profileTagsEn, site.profileTagsZh) ||
-        fallback.siteInfo.profileTags,
+      profileTags: profileTags ?? fallback.siteInfo.profileTags,
     },
-    aboutBlocks: site.aboutBlocks?.length
+    aboutBlocks: Array.isArray(site.aboutBlocks)
       ? site.aboutBlocks.map((block, index) => ({
           title:
             pick(language, block.titleEn, block.titleZh) ||
@@ -187,7 +191,7 @@ function mapContent(
             "",
         }))
       : fallback.aboutBlocks,
-    links: site.links?.length
+    links: Array.isArray(site.links)
       ? site.links.map((link, index) => ({
           name: link.name || fallback.links[index]?.name || "Link",
           icon: link.icon || fallback.links[index]?.icon || "L",
@@ -198,7 +202,7 @@ function mapContent(
             "Visit",
         }))
       : fallback.links,
-    gallery: site.artworks?.length
+    gallery: Array.isArray(site.artworks)
       ? site.artworks.map((item, index) =>
           mapArtwork(item, language, fallback.gallery[index]),
         )
