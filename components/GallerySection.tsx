@@ -127,7 +127,7 @@ export function GallerySection({
 
   return (
     <section id="gallery" className="h-full">
-      <div className="relative flex h-full flex-col overflow-hidden rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(10,16,40,0.96),rgba(6,10,24,0.84))] p-5 shadow-[0_18px_40px_rgba(5,8,20,0.32)] md:p-6">
+      <div className="content-panel gallery-panel relative flex h-full flex-col overflow-hidden rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(10,16,40,0.96),rgba(6,10,24,0.84))] p-5 shadow-[0_18px_40px_rgba(5,8,20,0.32)] md:p-6">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_0%,rgba(165,180,255,0.1),transparent_20%),radial-gradient(circle_at_86%_10%,rgba(108,230,255,0.1),transparent_18%)]" />
         <div className="pointer-events-none absolute left-8 right-8 top-0 h-px bg-gradient-to-r from-transparent via-white/22 to-transparent" />
         <div className="pointer-events-none absolute inset-y-12 left-6 w-px bg-gradient-to-b from-transparent via-blue-100/12 to-transparent" />
@@ -157,7 +157,7 @@ export function GallerySection({
               type="button"
               whileHover={{ y: -2, scale: 1.01 }}
               onClick={() => setSelected(featuredItem)}
-              className="group relative grid w-full overflow-hidden rounded-[24px] border border-white/12 bg-slate-950/35 text-left shadow-[0_16px_36px_rgba(4,8,18,0.24)] md:grid-cols-[minmax(360px,1.15fr)_minmax(260px,0.55fr)] md:rounded-[26px]"
+              className="artwork-card group relative grid w-full overflow-hidden rounded-[24px] border border-white/12 bg-slate-950/35 text-left shadow-[0_16px_36px_rgba(4,8,18,0.24)] md:grid-cols-[minmax(360px,1.15fr)_minmax(260px,0.55fr)] md:rounded-[26px]"
             >
               <span className="pointer-events-none absolute left-4 top-4 z-10 rounded-full border border-white/12 bg-black/28 px-3 py-1 text-[11px] tracking-[0.22em] text-blue-100/75">
                 {labels.featured.toUpperCase()}
@@ -216,7 +216,7 @@ export function GallerySection({
             </motion.button>
           ) : null}
 
-          <div className="rounded-[22px] border border-white/10 bg-black/16 p-2.5 backdrop-blur-sm">
+          <div className="category-bar rounded-[22px] border border-white/10 bg-black/16 p-2.5 backdrop-blur-sm">
             <div className="flex items-center gap-2 overflow-hidden rounded-[18px] border border-white/8 bg-slate-950/28 p-1.5">
               {allCategories.map((category) => (
                 <button
@@ -224,7 +224,8 @@ export function GallerySection({
                   type="button"
                   onClick={() => setActiveCategory(category)}
                   title={labels.categoryNotes[category] ?? category}
-                  className={`min-w-0 flex-1 rounded-[14px] border px-2.5 py-2 text-xs transition sm:text-sm md:flex-none md:px-3.5 ${
+                  aria-pressed={activeCategory === category}
+                  className={`category-button min-w-0 flex-1 rounded-[14px] border px-2.5 py-2 text-xs transition sm:text-sm md:flex-none md:px-3.5 ${
                     activeCategory === category
                       ? "border-blue-200/45 bg-[linear-gradient(180deg,rgba(117,164,255,0.38),rgba(72,108,179,0.22))] text-white shadow-[0_0_18px_rgba(103,149,255,0.16)]"
                       : "border-transparent bg-transparent text-blue-100/72 hover:bg-white/8 hover:text-blue-50"
@@ -254,7 +255,7 @@ export function GallerySection({
                   type="button"
                   whileHover={{ y: -2, scale: 1.01 }}
                   onClick={() => setSelected(item)}
-                  className="group relative overflow-hidden rounded-[22px] border border-white/12 bg-slate-950/35 text-left shadow-[0_16px_36px_rgba(4,8,18,0.24)] transition hover:border-blue-200/42 md:rounded-[24px]"
+                  className="artwork-card group relative overflow-hidden rounded-[22px] border border-white/12 bg-slate-950/35 text-left shadow-[0_16px_36px_rgba(4,8,18,0.24)] transition hover:border-blue-200/42 md:rounded-[24px]"
                 >
                   <span className="pointer-events-none absolute left-4 top-4 z-10 rounded-full border border-white/12 bg-black/28 px-3 py-1 text-[11px] tracking-[0.22em] text-blue-100/75">
                     {labels.work.toUpperCase()}

@@ -104,9 +104,9 @@ export function PosterStage({
   return (
     <section id="home">
       <div
-        className="rounded-[28px] border border-white/12 bg-[linear-gradient(180deg,rgba(6,11,24,0.94),rgba(4,8,20,0.88))] p-3 shadow-[0_30px_90px_rgba(8,12,28,0.55),0_0_48px_rgba(103,149,255,0.16)] md:rounded-[34px] md:p-4"
+        className="poster-frame rounded-[28px] border border-white/12 bg-[linear-gradient(180deg,rgba(6,11,24,0.94),rgba(4,8,20,0.88))] p-3 shadow-[0_30px_90px_rgba(8,12,28,0.55),0_0_48px_rgba(103,149,255,0.16)] md:rounded-[34px] md:p-4"
       >
-        <div className="relative aspect-[1823/1118] overflow-hidden rounded-[22px] border border-white/12 bg-slate-950 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)] md:rounded-[28px]">
+        <div className="poster-canvas relative aspect-[1823/1118] overflow-hidden rounded-[22px] border border-white/12 bg-slate-950 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)] md:rounded-[28px]">
           <Image
             src={siteInfo.backgroundImage}
             alt="AFlatConcerto poster layout"
@@ -141,13 +141,13 @@ export function PosterStage({
           ))}
         </div>
 
-        <nav className="mt-3 grid grid-cols-3 overflow-hidden rounded-[18px] border border-white/10 bg-white/[0.07] p-px shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] md:mt-4">
+        <nav className="poster-nav mt-3 grid grid-cols-3 overflow-hidden rounded-[18px] border border-white/10 bg-white/[0.07] p-px shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] md:mt-4">
           {navItems.map((item, index) => (
             <button
               key={item.target}
               type="button"
               onClick={() => scrollTo(item.target)}
-              className="group relative min-h-[66px] overflow-hidden bg-[linear-gradient(180deg,rgba(16,23,43,0.72),rgba(7,11,24,0.58))] px-2.5 py-2.5 text-blue-50 transition duration-200 hover:bg-[linear-gradient(180deg,rgba(27,40,68,0.8),rgba(11,17,34,0.64))] focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-cyan-200/80 md:min-h-[74px] md:px-4"
+              className="poster-nav-button group relative min-h-[66px] overflow-hidden bg-[linear-gradient(180deg,rgba(16,23,43,0.72),rgba(7,11,24,0.58))] px-2.5 py-2.5 text-blue-50 transition duration-200 hover:bg-[linear-gradient(180deg,rgba(27,40,68,0.8),rgba(11,17,34,0.64))] focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-cyan-200/80 md:min-h-[74px] md:px-4"
             >
               {index < navItems.length - 1 ? (
                 <span className="pointer-events-none absolute inset-y-3 right-0 w-px bg-white/10" />

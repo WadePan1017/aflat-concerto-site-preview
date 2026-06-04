@@ -16,7 +16,7 @@ export function LinksSection({
   return (
     <section id="links">
       <div
-        className="relative overflow-hidden rounded-[30px] border border-white/10 bg-[linear-gradient(180deg,rgba(11,16,38,0.96),rgba(6,10,25,0.84))] p-5 shadow-[0_18px_40px_rgba(5,8,20,0.32)] md:p-6"
+        className="content-panel links-panel relative overflow-hidden rounded-[30px] border border-white/10 bg-[linear-gradient(180deg,rgba(11,16,38,0.96),rgba(6,10,25,0.84))] p-5 shadow-[0_18px_40px_rgba(5,8,20,0.32)] md:p-6"
       >
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_10%,rgba(165,196,255,0.08),transparent_20%),radial-gradient(circle_at_90%_20%,rgba(111,236,255,0.08),transparent_16%)]" />
         <div className="flex items-start justify-between gap-4">
@@ -32,7 +32,7 @@ export function LinksSection({
           <button
             type="button"
             onClick={toTop}
-            className="shrink-0 rounded-full border border-blue-200/30 bg-blue-300/15 px-4 py-2 text-sm font-semibold text-blue-50 transition hover:bg-blue-300/28"
+            className="home-pill shrink-0 rounded-full border border-blue-200/30 bg-blue-300/15 px-4 py-2 text-sm font-semibold text-blue-50 transition hover:bg-blue-300/28"
           >
             {labels.home}
           </button>
@@ -45,7 +45,7 @@ export function LinksSection({
               href={item.url}
               target="_blank"
               rel="noreferrer"
-              className="group relative flex min-h-[116px] flex-col items-start justify-between overflow-hidden rounded-[18px] border border-white/12 bg-slate-900/28 p-3 transition hover:-translate-y-0.5 hover:border-cyan-300/40 hover:bg-blue-900/25 md:min-h-0 md:flex-row md:items-center md:px-4 md:py-2.5"
+              className="link-card group relative flex min-h-[116px] flex-col items-start justify-between overflow-hidden rounded-[18px] border border-white/12 bg-slate-900/28 p-3 transition hover:-translate-y-0.5 hover:border-cyan-300/40 hover:bg-blue-900/25 md:min-h-0 md:flex-row md:items-center md:px-4 md:py-2.5"
             >
               <span className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-white/8 to-transparent opacity-0 transition group-hover:opacity-100" />
               <span className="relative flex min-w-0 flex-col gap-2 md:flex-row md:items-center">

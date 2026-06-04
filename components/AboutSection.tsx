@@ -15,7 +15,7 @@ export function AboutSection({
   return (
     <section id="about">
       <div
-        className="relative overflow-hidden rounded-[30px] border border-white/10 bg-[linear-gradient(180deg,rgba(13,19,44,0.96),rgba(7,11,28,0.84))] p-5 shadow-[0_18px_40px_rgba(5,8,20,0.32)] md:p-6"
+        className="content-panel about-panel relative overflow-hidden rounded-[30px] border border-white/10 bg-[linear-gradient(180deg,rgba(13,19,44,0.96),rgba(7,11,28,0.84))] p-5 shadow-[0_18px_40px_rgba(5,8,20,0.32)] md:p-6"
       >
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(164,180,255,0.14),transparent_24%),radial-gradient(circle_at_82%_10%,rgba(118,231,255,0.12),transparent_18%)]" />
         <div className="pointer-events-none absolute right-4 top-4 h-24 w-24 rounded-full border border-white/8" />
@@ -57,19 +57,19 @@ export function AboutSection({
           </div>
 
           <div className="mt-5 grid grid-cols-3 gap-2.5">
-            <div className="rounded-[18px] border border-white/10 bg-black/18 px-3 py-2.5 text-center">
+            <div className="stat-tile rounded-[18px] border border-white/10 bg-black/18 px-3 py-2.5 text-center">
               <p className="text-[11px] tracking-[0.22em] text-blue-200/65">
                 {labels.role.toUpperCase()}
               </p>
               <p className="mt-2 text-sm font-medium text-white">{siteInfo.role}</p>
             </div>
-            <div className="rounded-[18px] border border-white/10 bg-black/18 px-3 py-2.5 text-center">
+            <div className="stat-tile rounded-[18px] border border-white/10 bg-black/18 px-3 py-2.5 text-center">
               <p className="text-[11px] tracking-[0.22em] text-blue-200/65">
                 {labels.aura.toUpperCase()}
               </p>
               <p className="mt-2 text-sm font-medium text-white">{siteInfo.aura}</p>
             </div>
-            <div className="rounded-[18px] border border-white/10 bg-black/18 px-3 py-2.5 text-center">
+            <div className="stat-tile rounded-[18px] border border-white/10 bg-black/18 px-3 py-2.5 text-center">
               <p className="text-[11px] tracking-[0.22em] text-blue-200/65">
                 {labels.style.toUpperCase()}
               </p>
@@ -82,7 +82,7 @@ export function AboutSection({
           {aboutBlocks.map((block) => (
             <div
               key={block.title}
-              className="rounded-[18px] border border-white/10 bg-[linear-gradient(180deg,rgba(10,16,38,0.56),rgba(6,10,24,0.46))] px-4 py-2.5 backdrop-blur-sm"
+              className="info-tile rounded-[18px] border border-white/10 bg-[linear-gradient(180deg,rgba(10,16,38,0.56),rgba(6,10,24,0.46))] px-4 py-2.5 backdrop-blur-sm"
             >
               <div className="flex items-start justify-between gap-4">
                 <h4 className="min-w-0 text-sm font-semibold tracking-[0.08em] text-blue-50">

@@ -26,13 +26,17 @@ export function PortfolioShell({ contentByLanguage }: PortfolioShellProps) {
   }
 
   return (
-    <div id="top" className="relative min-h-screen overflow-x-hidden">
+    <div
+      id="top"
+      data-site={content.siteKey}
+      className="site-shell relative min-h-screen overflow-x-hidden"
+    >
       <div className="page-aura" />
       <div className="fixed top-4 left-4 z-40">
         <button
           type="button"
           onClick={switchLanguage}
-          className="rounded-full border border-blue-100/25 bg-slate-950/70 px-4 py-2 text-sm font-semibold text-blue-50 shadow-[0_14px_34px_rgba(0,0,0,0.32)] backdrop-blur-md transition hover:border-cyan-100/40 hover:bg-blue-900/45"
+          className="language-toggle rounded-full border border-blue-100/25 bg-slate-950/70 px-4 py-2 text-sm font-semibold text-blue-50 shadow-[0_14px_34px_rgba(0,0,0,0.32)] backdrop-blur-md transition hover:border-cyan-100/40 hover:bg-blue-900/45"
           aria-label="Switch language"
         >
           {language === "en" ? content.labels.languageZh : content.labels.languageEn}
