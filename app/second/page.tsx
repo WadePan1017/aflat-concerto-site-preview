@@ -15,6 +15,7 @@ export default async function SecondSitePage() {
   return (
     <PortfolioShell
       contentByLanguage={Object.fromEntries(entries) as Record<Language, SiteContent>}
+      siteKey="second"
     />
   );
 }

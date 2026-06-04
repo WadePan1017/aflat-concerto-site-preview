@@ -1,20 +1,57 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AboutSection } from "@/components/AboutSection";
 import { GallerySection } from "@/components/GallerySection";
 import { LinksSection } from "@/components/LinksSection";
 import { PosterStage } from "@/components/PosterStage";
 import type { Language, SiteContent } from "@/data/site";
+import { fetchSiteContent } from "@/sanity/queries";
 
 type PortfolioShellProps = {
   contentByLanguage: Record<Language, SiteContent>;
+  siteKey: string;
 };
 
-export function PortfolioShell({ contentByLanguage }: PortfolioShellProps) {
-  const [language, setLanguage] = useState<Language>("en");
-  const content = contentByLanguage[language];
+const languages: Language[] = ["en", "zh"];
+
+export function PortfolioShell({ contentByLanguage, siteKey }: PortfolioShellProps) {
+  const [liveContentByLanguage, setLiveContentByLanguage] = useState(contentByLanguage);
+  const [language, setLanguage] = useState<Language>(() => {
+    if (typeof window === "undefined") {
+      return "en";
+    }
+
+    const requestedLanguage = new URL(window.location.href).searchParams.get("lang");
+    return requestedLanguage === "zh" ? "zh" : "en";
+  });
+  const content = liveContentByLanguage[language];
   const otherLanguage = language === "en" ? "zh" : "en";
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadLiveContent() {
+      const entries = await Promise.all(
+        languages.map(async (entryLanguage) => [
+          entryLanguage,
+          await fetchSiteContent(entryLanguage, siteKey),
+        ] as const),
+      );
+
+      if (!cancelled) {
+        setLiveContentByLanguage(Object.fromEntries(entries) as Record<Language, SiteContent>);
+      }
+    }
+
+    loadLiveContent().catch(() => {
+      // Keep the statically generated content if the live CMS fetch fails.
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [siteKey]);
 
   function switchLanguage() {
     const nextLanguage = otherLanguage;

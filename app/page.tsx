@@ -12,6 +12,7 @@ export default async function Home() {
   return (
     <PortfolioShell
       contentByLanguage={Object.fromEntries(entries) as Record<Language, SiteContent>}
+      siteKey="main"
     />
   );
 }
