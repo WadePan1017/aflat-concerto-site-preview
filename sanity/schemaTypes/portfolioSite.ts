@@ -21,6 +21,14 @@ export const portfolioSite = defineType({
       validation: (rule) => rule.required(),
       description: "系统字段，客户不用填写。",
     }),
+    defineField({
+      name: "adminTitle",
+      title: "后台显示名称",
+      type: "string",
+      group: "basic",
+      description:
+        "用于后台左侧的网站列表名称。修改并发布后，刷新后台即可看到新名称。",
+    }),
     defineField({ name: "nameEn", title: "网站名称（英文）", type: "string", group: "basic" }),
     defineField({ name: "nameZh", title: "网站名称（中文）", type: "string", group: "basic" }),
     defineField({ name: "subtitleEn", title: "副标题（英文）", type: "string", group: "basic" }),
