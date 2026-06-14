@@ -306,6 +306,12 @@ export async function fetchSiteContent(
             accent: "#9c6fff",
             text: "#f1ecff",
           },
+          labels: {
+            ...defaultFallback.labels,
+            role: language === "zh" ? "性别" : "Gender",
+            aura: language === "zh" ? "生日" : "Birthday",
+            style: language === "zh" ? "年龄" : "Age",
+          },
         }
       : defaultFallback;
 
