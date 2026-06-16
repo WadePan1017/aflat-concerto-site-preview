@@ -55,19 +55,19 @@ const secondHotspots: Hotspot[] = [
 const thirdHotspots: Hotspot[] = [
   {
     id: "language",
-    image: assetPath("/assets/hotspots/btn-second-language.png"),
+    image: assetPath("/assets/hotspots/btn-third-language.png"),
     label: "Switch language",
     target: "language",
-    className: "left-[66.9%] top-[76.2%] h-[11.8%] w-[12.6%]",
+    className: "left-[66.2%] top-[75.8%] h-[12.9%] w-[13.6%]",
     visible: false,
     revealOnHover: true,
   },
   {
     id: "home",
-    image: assetPath("/assets/hotspots/btn-second-home.png"),
+    image: assetPath("/assets/hotspots/btn-third-home.png"),
     label: "Home",
     target: "home",
-    className: "left-[80.2%] top-[76.2%] h-[11.8%] w-[12.5%]",
+    className: "left-[80.3%] top-[75.8%] h-[12.9%] w-[13.6%]",
     visible: false,
     revealOnHover: true,
   },
