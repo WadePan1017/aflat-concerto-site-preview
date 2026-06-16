@@ -102,12 +102,15 @@ export function GalleryModal({ item, labels, onClose }: GalleryModalProps) {
                 {[
                   [
                     labels.character,
+                    getRole(item, labels),
+                  ],
+                  [labels.color, getColor(item, labels)],
+                  [
+                    labels.type,
                     item.category
                       ? getCategoryLabel(labels, item.category)
                       : labels.artworkFallback,
                   ],
-                  [labels.color, getColor(item, labels)],
-                  [labels.type, getRole(item, labels)],
                   [labels.date, getDate(item, labels)],
                 ].map(([label, value]) => (
                   <div key={label} className="gallery-modal-metric rounded-[18px] border border-white/10 bg-black/16 p-3">
