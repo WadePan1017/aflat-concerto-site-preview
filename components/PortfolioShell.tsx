@@ -106,7 +106,11 @@ export function PortfolioShell({ contentByLanguage, siteKey }: PortfolioShellPro
             siteInfo={content.siteInfo}
           />
           <LinksSection labels={content.labels} links={content.links} />
-          <GallerySection gallery={content.gallery} labels={content.labels} />
+          <GallerySection
+            categories={content.categories}
+            gallery={content.gallery}
+            labels={content.labels}
+          />
         </section>
       </main>
     </div>

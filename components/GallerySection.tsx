@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import type { GalleryItem, PortfolioLabels } from "@/data/site";
+import type { CategoryItem, GalleryItem, PortfolioLabels } from "@/data/site";
 import { GalleryModal } from "./GalleryModal";
 import { BackToTop } from "./BackToTop";
 
@@ -88,9 +88,11 @@ function ArtworkImage({
 }
 
 export function GallerySection({
+  categories,
   gallery,
   labels,
 }: {
+  categories?: CategoryItem[];
   gallery: GalleryItem[];
   labels: PortfolioLabels;
 }) {
@@ -98,15 +100,23 @@ export function GallerySection({
   const [selected, setSelected] = useState<GalleryItem | null>(null);
 
   const allCategories = useMemo(
-    () => [
-      "All",
-      ...new Set(
+    () => {
+      const usedCategories = new Set(
         gallery
           .map((item) => item.category)
           .filter((category): category is string => Boolean(category)),
-      ),
-    ],
-    [gallery],
+      );
+
+      const managedCategories = categories
+        ?.map((category) => category.id)
+        .filter((category) => usedCategories.has(category));
+
+      return [
+        "All",
+        ...(managedCategories?.length ? managedCategories : [...usedCategories]),
+      ];
+    },
+    [categories, gallery],
   );
 
   const filtered = useMemo(() => {

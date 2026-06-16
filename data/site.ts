@@ -51,6 +51,13 @@ export type GalleryItem = {
   tags?: string[];
 };
 
+export type CategoryItem = {
+  id: string;
+  label: string;
+  shortLabel?: string;
+  note?: string;
+};
+
 export type PortfolioLabels = {
   allCategory: string;
   artworkFallback: string;
@@ -105,6 +112,7 @@ export type SiteContent = {
   siteInfo: SiteInfo;
   aboutBlocks: AboutBlock[];
   links: LinkItem[];
+  categories?: CategoryItem[];
   gallery: GalleryItem[];
   labels: PortfolioLabels;
 };

@@ -45,10 +45,25 @@ export const artwork = defineType({
     }),
     defineField({ name: "titleZh", title: "作品标题（中文）", type: "string", group: "basic" }),
     defineField({
+      name: "categoryRef",
+      title: "稿件分类",
+      type: "reference",
+      to: [{ type: "artworkCategory" }],
+      group: "basic",
+      options: {
+        filter: ({ document }) => ({
+          filter: "_type == 'artworkCategory' && siteKey == $siteKey",
+          params: { siteKey: document?.siteKey || "main" },
+        }),
+      },
+      description: "先在左侧“稿件分类”里维护分类，再在这里选择。",
+    }),
+    defineField({
       name: "category",
-      title: "作品分类 / 类型",
+      title: "旧分类（兼容用）",
       type: "string",
       group: "basic",
+      hidden: true,
       options: {
         list: [
           { title: "主视觉", value: "Key Visual" },
@@ -62,7 +77,6 @@ export const artwork = defineType({
           { title: "个人作品", value: "Personal Work" },
         ],
       },
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "thumbnail",
@@ -120,7 +134,7 @@ export const artwork = defineType({
   preview: {
     select: {
       title: "titleZh",
-      subtitle: "category",
+      subtitle: "categoryRef.titleZh",
       media: "thumbnail",
     },
   },

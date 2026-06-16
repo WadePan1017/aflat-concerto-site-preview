@@ -1,4 +1,4 @@
-﻿import type { GalleryItem, Language, SiteContent } from "@/data/site";
+﻿import type { CategoryItem, GalleryItem, Language, SiteContent } from "@/data/site";
 import { assetPath, defaultContentByLanguage } from "@/data/site";
 import { sanityClient } from "./client";
 import { sanityEnabled, siteKey } from "./env";
@@ -17,6 +17,7 @@ type SanityArtwork = {
   descriptionEn?: string;
   descriptionZh?: string;
   category?: string;
+  categoryRef?: SanityCategory;
   creator?: string;
   createdAt?: string;
   roleEn?: string;
@@ -29,6 +30,17 @@ type SanityArtwork = {
   tagsZh?: string[];
   thumbnail?: SanityImage;
   fullImage?: SanityImage;
+};
+
+type SanityCategory = {
+  _id: string;
+  key?: string;
+  titleEn?: string;
+  titleZh?: string;
+  shortTitleEn?: string;
+  shortTitleZh?: string;
+  noteEn?: string;
+  noteZh?: string;
 };
 
 type SanityUiText = Record<string, string | undefined>;
@@ -58,6 +70,7 @@ type SanitySite = {
   heroImage?: SanityImage;
   backgroundImage?: SanityImage;
   uiText?: SanityUiText;
+  categories?: SanityCategory[];
   aboutBlocks?: Array<{
     titleEn?: string;
     titleZh?: string;
@@ -100,6 +113,16 @@ const siteContentQuery = `
   "heroImage": heroImage.asset->{url, "width": metadata.dimensions.width, "height": metadata.dimensions.height},
   "backgroundImage": backgroundImage.asset->{url, "width": metadata.dimensions.width, "height": metadata.dimensions.height},
   uiText,
+  "categories": *[_type == "artworkCategory" && siteKey == $siteKey] | order(displayOrder asc, titleZh asc, titleEn asc) {
+    _id,
+    key,
+    titleEn,
+    titleZh,
+    shortTitleEn,
+    shortTitleZh,
+    noteEn,
+    noteZh
+  },
   aboutBlocks[]{titleEn, titleZh, bodyEn, bodyZh},
   links[]{name, icon, url, noteEn, noteZh},
   "artworks": *[_type == "artwork" && siteKey == $siteKey] | order(featured desc, displayOrder asc, createdAt desc) {
@@ -110,6 +133,7 @@ const siteContentQuery = `
     descriptionEn,
     descriptionZh,
     category,
+    "categoryRef": categoryRef->{_id, key, titleEn, titleZh, shortTitleEn, shortTitleZh, noteEn, noteZh},
     creator,
     createdAt,
     roleEn,
@@ -174,10 +198,47 @@ function copyWithFallback(
   );
 }
 
+function mapCategories(
+  categories: SanityCategory[] | undefined,
+  language: Language,
+): CategoryItem[] {
+  if (!Array.isArray(categories)) {
+    return [];
+  }
+
+  return categories
+    .map((category) => {
+      const id = category.key || category._id;
+      const label =
+        pickWithFallback(language, category.titleEn, category.titleZh, id) || id;
+      const shortLabel = pickWithFallback(
+        language,
+        category.shortTitleEn,
+        category.shortTitleZh,
+        label,
+      );
+      const note = pickWithFallback(
+        language,
+        category.noteEn,
+        category.noteZh,
+        "",
+      );
+
+      return {
+        id,
+        label,
+        shortLabel: shortLabel || label,
+        note: note || undefined,
+      };
+    })
+    .filter((category) => Boolean(category.id));
+}
+
 function mapLabels(
   uiText: SanityUiText | undefined,
   language: Language,
   fallback: SiteContent["labels"],
+  categories: CategoryItem[] = [],
 ): SiteContent["labels"] {
   const categoryKeys = [
     ["All", "categoryAll"],
@@ -206,10 +267,23 @@ function mapLabels(
     categoryShortLabels[category] = nextLabel;
   });
 
+  categories.forEach((category) => {
+    categoryLabels[category.id] = category.label;
+    categoryShortLabels[category.id] = category.shortLabel || category.label;
+  });
+
   return {
     ...fallback,
     categoryLabels,
     categoryShortLabels,
+    categoryNotes: {
+      ...fallback.categoryNotes,
+      ...Object.fromEntries(
+        categories
+          .filter((category) => category.note)
+          .map((category) => [category.id, category.note as string]),
+      ),
+    },
     aboutEyebrow: copyWithFallback(uiText, "aboutEyebrow", language, fallback.aboutEyebrow),
     aboutTitle: copyWithFallback(uiText, "aboutTitle", language, fallback.aboutTitle),
     role: copyWithFallback(uiText, "roleLabel", language, fallback.role),
@@ -282,6 +356,7 @@ function mapArtwork(
 ): GalleryItem {
   const thumbnail = item.thumbnail || item.fullImage;
   const fullImage = item.fullImage || item.thumbnail;
+  const categoryId = item.categoryRef?.key || item.categoryRef?._id;
 
   return {
     id: item._id,
@@ -309,7 +384,7 @@ function mapArtwork(
       item.descriptionZh,
       fallback?.description,
     ),
-    category: item.category || fallback?.category || "Commission",
+    category: categoryId || item.category || fallback?.category || "Commission",
     tags: pickListWithFallback(language, item.tags, item.tagsZh, fallback?.tags),
   };
 }
@@ -319,6 +394,7 @@ function mapContent(
   language: Language,
   fallback: SiteContent,
 ): SiteContent {
+  const categories = mapCategories(site.categories, language);
   const profileTags = pickListWithFallback(
     language,
     site.profileTagsEn,
@@ -407,12 +483,13 @@ function mapContent(
             ) || "Visit",
         }))
       : fallback.links,
+    categories: categories.length ? categories : fallback.categories,
     gallery: Array.isArray(site.artworks)
       ? site.artworks.map((item, index) =>
           mapArtwork(item, language, fallback.gallery[index]),
         )
       : fallback.gallery,
-    labels: mapLabels(site.uiText, language, fallback.labels),
+    labels: mapLabels(site.uiText, language, fallback.labels, categories),
   };
 }
 
@@ -438,6 +515,13 @@ export async function fetchSiteContent(
             accent: "#9c6fff",
             text: "#f1ecff",
           },
+          gallery:
+            requestedSiteKey === "third"
+              ? defaultFallback.gallery.map((item, index) => ({
+                  ...item,
+                  category: index % 2 === 0 ? "Astraea" : "yy-with-light-johan",
+                }))
+              : defaultFallback.gallery,
           labels: {
             ...defaultFallback.labels,
             role: language === "zh" ? "性别" : "Gender",
@@ -452,6 +536,27 @@ export async function fetchSiteContent(
                 ? "这是我oc的稿件！请注意二传盗发去除水印不被允许！"
                 : "These are artworks for my oc! Republish, remove watermark and so on are not allowed!",
           },
+          categories:
+            requestedSiteKey === "third"
+              ? [
+                  {
+                    id: "Astraea",
+                    label: language === "zh" ? "常夜" : "Astraea",
+                    shortLabel: language === "zh" ? "常夜" : "Astraea",
+                  },
+                  {
+                    id: "yy-with-light-johan",
+                    label:
+                      language === "zh"
+                        ? "屿烎和小宝宝们"
+                        : "yy with Light & Johan",
+                    shortLabel:
+                      language === "zh"
+                        ? "屿烎和小宝宝们"
+                        : "yy with Light & Johan",
+                  },
+                ]
+              : defaultFallback.categories,
         }
       : defaultFallback;
 

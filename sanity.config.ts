@@ -16,7 +16,10 @@ export default defineConfig({
   schema: {
     types: schemaTypes,
     templates: (prev) => [
-      ...prev.filter((template) => template.id !== "artwork"),
+      ...prev.filter(
+        (template) =>
+          template.id !== "artwork" && template.id !== "artworkCategory",
+      ),
       {
         id: "artwork-by-site",
         title: "新增作品",
@@ -26,6 +29,16 @@ export default defineConfig({
           siteKey: siteKey || "main",
           displayOrder: 100,
           featured: false,
+        }),
+      },
+      {
+        id: "artwork-category-by-site",
+        title: "新增稿件分类",
+        schemaType: "artworkCategory",
+        parameters: [{ name: "siteKey", type: "string" }],
+        value: ({ siteKey }: { siteKey?: string }) => ({
+          siteKey: siteKey || "main",
+          displayOrder: 100,
         }),
       },
     ],

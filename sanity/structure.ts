@@ -69,6 +69,22 @@ export const structure: StructureResolver = async (S, context) => {
                       .title(`${siteTitle.displayName} - 首页内容`),
                   ),
                 S.listItem()
+                  .id(`site-${site.key}-categories`)
+                  .title("稿件分类")
+                  .schemaType("artworkCategory")
+                  .child(
+                    S.documentTypeList("artworkCategory")
+                      .id(`artwork-category-${site.key}`)
+                      .title(`${siteTitle.displayName} - 稿件分类`)
+                      .filter("_type == 'artworkCategory' && siteKey == $siteKey")
+                      .params({ siteKey: site.key })
+                      .initialValueTemplates([
+                        S.initialValueTemplateItem("artwork-category-by-site", {
+                          siteKey: site.key,
+                        }),
+                      ]),
+                  ),
+                S.listItem()
                   .id(`site-${site.key}-artworks`)
                   .title("作品管理")
                   .schemaType("artwork")
