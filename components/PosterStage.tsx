@@ -52,6 +52,23 @@ const secondHotspots: Hotspot[] = [
   },
 ];
 
+const thirdHotspots: Hotspot[] = [
+  {
+    id: "language",
+    label: "Switch language",
+    target: "language",
+    className: "third-poster-hotspot left-[69.7%] top-[79.8%] h-[9.2%] w-[12.4%]",
+    visible: false,
+  },
+  {
+    id: "home",
+    label: "Home",
+    target: "home",
+    className: "third-poster-hotspot left-[82.7%] top-[79.8%] h-[9.2%] w-[12.2%]",
+    visible: false,
+  },
+];
+
 function scrollTo(target: Hotspot["target"]) {
   if (target === "home") {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -96,7 +113,10 @@ export function PosterStage({
   onLanguageSwitch: () => void;
 }) {
   const navItems = getNavItems(labels);
-  const hotspots = siteKey === "second" ? secondHotspots : mainHotspots;
+  const hotspots =
+    siteKey === "second" ? secondHotspots : siteKey === "third" ? thirdHotspots : mainHotspots;
+  const hiddenHotspotClass =
+    siteKey === "third" ? "bg-transparent transition" : "bg-cyan-100/0 transition hover:bg-cyan-100/5";
 
   function handleHotspotClick(target: Hotspot["target"]) {
     if (target === "language") {
@@ -127,7 +147,7 @@ export function PosterStage({
               key={hotspot.id}
               type="button"
               onClick={() => handleHotspotClick(hotspot.target)}
-              className={`group absolute z-20 cursor-pointer rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200/80 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${hotspot.visible === false ? "bg-cyan-100/0 transition hover:bg-cyan-100/5" : ""} ${hotspot.className}`}
+              className={`group absolute z-20 cursor-pointer rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200/80 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${hotspot.visible === false ? hiddenHotspotClass : ""} ${hotspot.className}`}
               aria-label={hotspot.label}
               title={hotspot.label}
             >

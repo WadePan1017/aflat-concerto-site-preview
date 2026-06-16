@@ -506,14 +506,17 @@ export async function fetchSiteContent(
           siteKey: requestedSiteKey,
           siteInfo: {
             ...defaultFallback.siteInfo,
-            backgroundImage: assetPath("/assets/poster-second.webp"),
+            backgroundImage:
+              requestedSiteKey === "third"
+                ? assetPath("/assets/poster-third.png")
+                : assetPath("/assets/poster-second.webp"),
           },
           theme: {
-            background: "#03020a",
-            surface: "#10071e",
-            primary: "#7e5cd2",
-            accent: "#9c6fff",
-            text: "#f1ecff",
+            background: requestedSiteKey === "third" ? "#050604" : "#03020a",
+            surface: requestedSiteKey === "third" ? "#14160d" : "#10071e",
+            primary: requestedSiteKey === "third" ? "#9f9750" : "#7e5cd2",
+            accent: requestedSiteKey === "third" ? "#d8ca73" : "#9c6fff",
+            text: requestedSiteKey === "third" ? "#f6f1d8" : "#f1ecff",
           },
           gallery:
             requestedSiteKey === "third"

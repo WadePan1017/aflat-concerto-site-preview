@@ -215,6 +215,90 @@ h4 {
   color: rgba(232, 218, 255, 0.88);
 }
 
+.site-shell[data-site="third"] .poster-frame {
+  border-color: rgba(218, 211, 161, 0.18);
+  background: linear-gradient(180deg, rgba(22, 23, 16, 0.96), rgba(8, 9, 6, 0.9));
+  box-shadow:
+    0 30px 92px rgba(0, 0, 0, 0.58),
+    0 0 50px rgba(171, 159, 84, 0.18),
+    inset 0 1px 0 rgba(255, 250, 205, 0.06);
+}
+
+.site-shell[data-site="third"] .poster-canvas {
+  border-color: rgba(225, 216, 158, 0.16);
+  background: #050604;
+}
+
+.site-shell[data-site="third"] .third-poster-hotspot {
+  border: 1px solid transparent;
+  background: transparent;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease,
+    background 160ms ease;
+}
+
+.site-shell[data-site="third"] .third-poster-hotspot:hover,
+.site-shell[data-site="third"] .third-poster-hotspot:focus-visible {
+  border-color: rgba(236, 227, 169, 0.28);
+  background: transparent;
+  box-shadow:
+    0 0 18px rgba(227, 218, 150, 0.2),
+    inset 0 0 18px rgba(237, 230, 184, 0.08);
+  transform: scale(1.018);
+}
+
+.site-shell[data-site="third"] .content-panel {
+  border-color: rgba(222, 213, 157, 0.14);
+  background: linear-gradient(180deg, rgba(25, 27, 16, 0.96), rgba(8, 10, 6, 0.88));
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.44),
+    0 0 34px rgba(154, 151, 79, 0.12),
+    inset 0 1px 0 rgba(255, 251, 213, 0.045);
+}
+
+.site-shell[data-site="third"] .about-panel::before,
+.site-shell[data-site="third"] .links-panel::before,
+.site-shell[data-site="third"] .gallery-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 14% 0%, rgba(218, 204, 132, 0.12), transparent 25%),
+    radial-gradient(circle at 88% 10%, rgba(119, 139, 76, 0.18), transparent 24%),
+    linear-gradient(90deg, rgba(118, 122, 68, 0.12), transparent 46%, rgba(167, 145, 82, 0.12));
+}
+
+.site-shell[data-site="third"] .stat-tile,
+.site-shell[data-site="third"] .info-tile,
+.site-shell[data-site="third"] .link-card,
+.site-shell[data-site="third"] .artwork-card,
+.site-shell[data-site="third"] .category-bar {
+  border-color: rgba(222, 213, 157, 0.13);
+  background: linear-gradient(180deg, rgba(28, 31, 18, 0.6), rgba(7, 9, 5, 0.5));
+  box-shadow: inset 0 1px 0 rgba(255, 250, 205, 0.035);
+}
+
+.site-shell[data-site="third"] .link-card:hover,
+.site-shell[data-site="third"] .artwork-card:hover {
+  border-color: rgba(226, 214, 143, 0.42);
+  background: linear-gradient(180deg, rgba(45, 49, 26, 0.64), rgba(12, 15, 7, 0.56));
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, 0.36),
+    0 0 24px rgba(196, 188, 112, 0.14);
+}
+
+.site-shell[data-site="third"] .home-pill,
+.site-shell[data-site="third"] .category-button[aria-pressed="true"],
+.site-shell[data-site="third"] .back-to-top > span {
+  border-color: rgba(230, 218, 151, 0.44);
+  background: linear-gradient(180deg, rgba(161, 150, 79, 0.32), rgba(80, 88, 44, 0.24));
+  color: #fffbe8;
+  box-shadow: 0 0 20px rgba(190, 181, 103, 0.16);
+}
+
 .site-shell[data-site] {
   --site-bg: #020611;
   --site-surface: #0b1026;

@@ -26,7 +26,7 @@ export function PortfolioShell({ contentByLanguage, siteKey }: PortfolioShellPro
     return requestedLanguage === "zh" ? "zh" : "en";
   });
   const content = liveContentByLanguage[language];
-  const visualSiteKey = content.siteKey === "third" ? "second" : content.siteKey;
+  const visualSiteKey = content.siteKey;
   const otherLanguage = language === "en" ? "zh" : "en";
   const themeStyle = {
     "--site-bg": content.theme.background,
