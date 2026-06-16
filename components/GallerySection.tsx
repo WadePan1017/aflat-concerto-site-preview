@@ -250,9 +250,7 @@ export function GallerySection({
               ))}
             </div>
 
-            <p className="mt-2 px-2 text-xs leading-5 text-blue-100/54 md:hidden">
-              {labels.categoryNotes[activeCategory] ?? labels.noWorksDescription}
-            </p>
+            {/* category description removed */}
           </div>
 
           {gridItems.length ? (
@@ -265,7 +263,7 @@ export function GallerySection({
                   onClick={() => setSelected(item)}
                   className="artwork-card group relative overflow-hidden rounded-[22px] border border-white/12 bg-slate-950/35 text-left shadow-[0_16px_36px_rgba(4,8,18,0.24)] transition hover:border-blue-200/42 md:rounded-[24px]"
                 >
-                  <span className="pointer-events-none absolute left-4 top-4 z-10 rounded-full border border-white/12 bg-black/28 px-3 py-1 text-[11px] tracking-[0.22em] text-blue-100/75">
+                  <span className="pointer-events-none absolute left-4 top-4 z-10 hidden rounded-full border border-white/12 bg-black/28 px-3 py-1 text-[11px] tracking-[0.22em] text-blue-100/75 md:block">
                     {labels.work.toUpperCase()}
                   </span>
                   <span className="pointer-events-none absolute right-4 top-4 z-10 hidden rounded-full border border-blue-200/28 bg-blue-300/14 px-3 py-1.5 text-xs font-semibold text-blue-50 opacity-0 shadow-[0_0_18px_rgba(103,149,255,0.16)] transition group-hover:opacity-100 md:inline-flex">
