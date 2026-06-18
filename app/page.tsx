@@ -6,13 +6,16 @@ const languages: Language[] = ["en", "zh"];
 
 export default async function Home() {
   const entries = await Promise.all(
-    languages.map(async (language) => [language, await fetchSiteContent(language)] as const),
+    languages.map(
+      async (language) =>
+        [language, await fetchSiteContent(language, "third")] as const,
+    ),
   );
 
   return (
     <PortfolioShell
       contentByLanguage={Object.fromEntries(entries) as Record<Language, SiteContent>}
-      siteKey="main"
+      siteKey="third"
     />
   );
 }
