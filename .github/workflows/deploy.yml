@@ -32,7 +32,7 @@ jobs:
       - name: Configure base path
         shell: bash
         run: |
-          if [[ "${{ vars.USE_CUSTOM_DOMAIN }}" == "true" ]]; then
+          if [[ -f public/CNAME ]]; then
             echo "NEXT_PUBLIC_BASE_PATH=" >> "$GITHUB_ENV"
           else
             REPO_NAME="${GITHUB_REPOSITORY#*/}"
