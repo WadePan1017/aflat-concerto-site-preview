@@ -1,22 +1,18 @@
 "use client";
 
-import { type CSSProperties, useEffect, useState } from "react";
+import { type CSSProperties, useState } from "react";
 import { AboutSection } from "@/components/AboutSection";
 import { GallerySection } from "@/components/GallerySection";
 import { LinksSection } from "@/components/LinksSection";
 import { PosterStage } from "@/components/PosterStage";
 import type { Language, SiteContent } from "@/data/site";
-import { fetchSiteContent } from "@/sanity/queries";
 
 type PortfolioShellProps = {
   contentByLanguage: Record<Language, SiteContent>;
   siteKey: string;
 };
 
-const languages: Language[] = ["en", "zh"];
-
 export function PortfolioShell({ contentByLanguage, siteKey }: PortfolioShellProps) {
-  const [liveContentByLanguage, setLiveContentByLanguage] = useState(contentByLanguage);
   const [language, setLanguage] = useState<Language>(() => {
     if (typeof window === "undefined") {
       return "en";
@@ -25,7 +21,8 @@ export function PortfolioShell({ contentByLanguage, siteKey }: PortfolioShellPro
     const requestedLanguage = new URL(window.location.href).searchParams.get("lang");
     return requestedLanguage === "zh" ? "zh" : "en";
   });
-  const content = liveContentByLanguage[language];
+
+  const content = contentByLanguage[language];
   const visualSiteKey = content.siteKey;
   const otherLanguage = language === "en" ? "zh" : "en";
   const themeStyle = {
@@ -35,31 +32,6 @@ export function PortfolioShell({ contentByLanguage, siteKey }: PortfolioShellPro
     "--site-accent": content.theme.accent,
     "--site-text": content.theme.text,
   } as CSSProperties;
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function loadLiveContent() {
-      const entries = await Promise.all(
-        languages.map(async (entryLanguage) => [
-          entryLanguage,
-          await fetchSiteContent(entryLanguage, siteKey),
-        ] as const),
-      );
-
-      if (!cancelled) {
-        setLiveContentByLanguage(Object.fromEntries(entries) as Record<Language, SiteContent>);
-      }
-    }
-
-    loadLiveContent().catch(() => {
-      // Keep the statically generated content if the live CMS fetch fails.
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [siteKey]);
 
   function switchLanguage() {
     const nextLanguage = otherLanguage;
